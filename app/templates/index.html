@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+Bienvenidos
+
+{% endblock titulo %}
+
+{% block tituloh1 %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-center">
+            <h1 class="text-center">Lista de Mascotas</h1>.
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock tituloh1 %}
+
+
+{% block contenido %}
+<br>
+
+<table class="table">
+    <a href="{{ url_for ('agregar_mascota') }}" type="button" class="btn btn-success">Agregar Mascota</a>
+
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre Mascota</th>
+        <th scope="col">Fecha Nacimiento</th>
+        <th scope="col">Raza</th>
+        <th scope="col">Dueño</th>
+        <th scope="col">Ver mascota</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Perez</td>
+        <td>
+            <button type="button" class="btn btn-primary">ver</button>
+            <button type="button" class="btn btn-info">actulizar</button>
+
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+
+
+
+ 
+{% endblock contenido %}
