@@ -19,7 +19,7 @@ Agregando Mascota!
 
 {% block contenido %}
 
-<form action="" method="post">
+<form action="{{ url_for ('agregar_mascota') }}" method="post">
     {{ form.hidden_tag() }}
 
     <div class="row">
@@ -34,12 +34,34 @@ Agregando Mascota!
             {{ form.fecha_nacimiento }}
         </div>
 
+        
+        <div class="col">
+            {{ form.raza.label }}
+            {{ form.raza }}
+        </div>
+
+                
+        <div class="col">
+            {{ form.propietario.label }}
+            {{ form.propietario }}
+        </div>
+
+        <div class="col">
+            {{ form.dni.label }}
+            {{ form.dni }}
+        </div>
+    </div>
+
+    <br>
+    <div class="text-center">
+        {{ form.boton }} 
+        <a href="{{ url_for ('index') }}" type="button" class="btn btn-danger">Cancelar</a>
     </div>
 
 
-
-
 </form>
+<br>
+
 
 
 {% endblock contenido %}

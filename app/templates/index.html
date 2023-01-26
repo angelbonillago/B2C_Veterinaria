@@ -37,18 +37,25 @@ Bienvenidos
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Perez</td>
-        <td>
-            <button type="button" class="btn btn-primary">ver</button>
-            <button type="button" class="btn btn-info">actulizar</button>
 
-        </td>
-      </tr>
+      {% set contador = 0 %}
+
+      {% for mascota in mascotas %}
+        <tr>
+          <th scope="row">{% set contador= contador + 1 %}</th>
+          <td>{{mascota.nombre}}</td>
+          <td>{{mascota.fecha_nacimiento}}</td>
+          <td>{{mascota.raza}}</td>
+          <td>{{mascota.propietario}}</td>
+          <td>{{mascota.dni}}</td>
+          <td>
+              <button type="button" class="btn btn-primary">ver</button>
+              <button type="button" class="btn btn-info">actulizar</button>
+
+          </td>
+        </tr>
+
+      {% endfor %}
 
 
     </tbody>
