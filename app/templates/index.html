@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
-
+{% block datatable %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+{% endblock datatable %}
 {% block titulo %}
 
 Bienvenidos
@@ -8,11 +12,11 @@ Bienvenidos
 
 {% block tituloh1 %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 d-flex justify-content-center">
-            <h1 class="text-center">Lista de Mascotas</h1>.
-        </div>
+  <div class="row">
+    <div class="col-sm-12 d-flex justify-content-center">
+      <h1 class="text-center">Lista de Mascotas</h1>.
     </div>
+  </div>
 </div>
 
 
@@ -23,45 +27,56 @@ Bienvenidos
 {% block contenido %}
 <br>
 
-<table class="table">
-    <a href="{{ url_for ('agregar_mascota') }}" type="button" class="btn btn-success">Agregar Mascota</a>
-
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre Mascota</th>
-        <th scope="col">Fecha Nacimiento</th>
-        <th scope="col">Raza</th>
-        <th scope="col">Dueño</th>
-        <th scope="col">Ver mascota</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      {% set contador = 0 %}
-
-      {% for mascota in mascotas %}
-        <tr>
-          <th scope="row">{% set contador= contador + 1 %}</th>
-          <td>{{mascota.nombre}}</td>
-          <td>{{mascota.fecha_nacimiento}}</td>
-          <td>{{mascota.raza}}</td>
-          <td>{{mascota.propietario}}</td>
-          <td>{{mascota.dni}}</td>
-          <td>
-              <button type="button" class="btn btn-primary">ver</button>
-              <button type="button" class="btn btn-info">actulizar</button>
-
-          </td>
-        </tr>
-
-      {% endfor %}
 
 
-    </tbody>
-  </table>
+<table id="data_table">
+
+  <thead>
+
+    <tr>
+      <th scope="col">Nombre Mascota</th>
+      <th scope="col">Fecha Nacimiento</th>
+      <th scope="col">Raza</th>
+      <th scope="col">Dueño</th>
+      <th scope="col">DNI</th>
+      <th scope="col">Ver mascota</th>
+    </tr>
+  </thead>
+  <a href="{{ url_for ('agregar_mascota') }}" type="button" class="btn btn-success">Agregar Mascota</a>
+
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
 
 
+<script type="text/javascript">
+  $(function () {
 
- 
+    $.ajax({
+      url: '{{ url_for ("mascotas") }}',
+      type: "GET",
+      success: function (response) {
+        console.log("ESTA ES LA RESPUESTA ->", response)
+        $('#data_table').DataTable({
+          pageLenght: 10,
+          "data": response["mascotas"],
+          "columns": [
+            { "data": "nombre" },
+            { "data": "fecha_nacimiento" },
+            { "data": "raza" },
+            { "data": "propietario" },
+            { "data": "dni" },
+            { "data": "guardar"},
+  
+          ]
+        })
+      }
+
+    })
+  })
+
+</script>
+
+
 {% endblock contenido %}

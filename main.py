@@ -1,5 +1,5 @@
 from app import create_app #importar esa fx
-from flask import render_template,request
+from flask import render_template,request,url_for,redirect,jsonify
 from app.forms import AgregarMascotaForm
 import datetime
 from app.db import db
@@ -8,9 +8,32 @@ app = create_app()
 @app.route("/") #raiz -> localhost:500
 def index():
     #traer todas las mascotas registradas 
-    mascotas = db.mascotasC.find() #consulta a mongodb
-    #print('mascotas -> ',mascotas)
-    return render_template('index.html',mascotas=mascotas)
+    #mascotas = db.mascotasC.find() #consulta a mongodb
+    return render_template('index.html')
+
+
+@app.route("/mascotas",methods=['GET'])
+def mascotas():
+    #traer todas las mascotas registradas 
+    mascotas = db.mascotasC.find() 
+    lista=[]
+    for mascota in mascotas:
+        diccionario={}
+
+        diccionario['nombre']=mascota['nombre']
+        diccionario['fecha_nacimiento']=mascota['fecha_nacimiento']
+        diccionario['raza']=mascota['raza']
+        diccionario['propietario']=mascota['propietario']
+        diccionario['dni']=mascota['dni']
+        diccionario['guardar']="<button type='button' class='btn btn-info'>actulizar</button> <button type='button' class='btn btn-primary'>ver</button>"
+
+        print(diccionario)
+        lista.append(diccionario)
+
+    return jsonify({"mascotas":lista})
+
+
+
 
 @app.route('/add-mascotas',methods=['POST','GET'])
 def agregar_mascota():
@@ -37,7 +60,8 @@ def agregar_mascota():
             'propietario': propietario, 
             'dni': dni
             })
-        return render_template('index.html',mascotas = {}) #ver que funcion remplaza a ese render_template y me llame a la fx index()
+        #return render_template('index.html',mascotas = {}) #ver que funcion remplaza a ese render_template y me llame a la fx index()
+        return redirect(url_for('index'))
 
     #GET -> LE MANDAMOS EL FORMULARIO VACIO
     
