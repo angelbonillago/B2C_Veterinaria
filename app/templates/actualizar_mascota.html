@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+Actualizando Mascota
+{% endblock titulo %}
+
+{% block tituloh1 %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-center">
+            <h1 class="text-center">Actualizar</h1>.
+        </div>
+    </div>
+</div>
+
+{% endblock tituloh1 %}
+
+{% block contenido %}
+
+<form action="{{ url_for ('actualizar_mascota') }}" method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="row">
+
+        <div class="col">
+            {{ form.nombre_mascota.label }}
+            {{ form.nombre_mascota }}
+        </div>
+
+        <div class="col">
+            {{ form.fecha_nacimiento.label }}
+            {{ form.fecha_nacimiento }}
+        </div>
+
+
+        <div class="col">
+            {{ form.raza.label }}
+            {{ form.raza }}
+        </div>
+
+    </div>
+
+    <br>
+    <div class="text-center">
+        {{ form.boton(class="btn btn-primary") }}
+        <a href="{{ url_for ('index') }}" type="button" class="btn btn-danger">Cancelar</a>
+    </div>
+
+
+</form>
+
+
+
+
+{% endblock contenido %}

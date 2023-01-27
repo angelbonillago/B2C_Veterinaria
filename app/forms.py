@@ -10,3 +10,11 @@ class AgregarMascotaForm(FlaskForm):
     propietario=StringField('Nombre de Propietario',validators=[DataRequired(),Length(max=50)])
     dni=StringField('DNI',validators=[DataRequired(),Length(max=50)])
     boton = SubmitField("Guardar")
+
+
+class ActualizarMascotaForm(FlaskForm):
+    
+    nombre_mascota=StringField('Nombre de Mascota',validators=[DataRequired(),Length(max=50)])
+    fecha_nacimiento=DateField("Fecha de nacimiento")
+    raza=StringField('Raza de Mascota',validators=[DataRequired(),Length(max=50)])
+    boton = SubmitField("Actualizar")

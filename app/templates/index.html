@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% block datatable %}
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+
+
 {% endblock datatable %}
 {% block titulo %}
-
 Bienvenidos
-
 {% endblock titulo %}
 
 {% block tituloh1 %}
@@ -27,54 +28,80 @@ Bienvenidos
 {% block contenido %}
 <br>
 
+  <div class="table-responsive">
+    <table id="data_table" class="table table-striped" style="width: 100%;">
+      <thead class="text-primary thead-dark">
+
+        <tr>
+          <th scope="col">Nombre Mascota</th>
+          <th scope="col">Fecha Nacimiento</th>
+          <th scope="col">Raza</th>
+          <th scope="col">Dueño</th>
+          <th scope="col">DNI</th>
+          <th scope="col">Operaciones</th>
+        </tr>
+      </thead>
+      <a href="{{ url_for ('agregar_mascota') }}" type="button" class="btn btn-success">Agregar Mascota</a>
+      <tbody>
+  
+  
+      </tbody>
+    </table>
+  </div>
 
 
-<table id="data_table">
 
-  <thead>
 
-    <tr>
-      <th scope="col">Nombre Mascota</th>
-      <th scope="col">Fecha Nacimiento</th>
-      <th scope="col">Raza</th>
-      <th scope="col">Dueño</th>
-      <th scope="col">DNI</th>
-      <th scope="col">Ver mascota</th>
-    </tr>
-  </thead>
-  <a href="{{ url_for ('agregar_mascota') }}" type="button" class="btn btn-success">Agregar Mascota</a>
-
-</table>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
 
 
 <script type="text/javascript">
-  $(function () {
+  //cuando ya el HTML esta cargado
+  $(document).ready(function () {
+
+    let datatable_mascota;
 
     $.ajax({
-      url: '{{ url_for ("mascotas") }}',
+      url: '{{ url_for ("mascotas") }}', //llamado al fx mascotas que se encuentra en el main.py -> url_for('')
       type: "GET",
       success: function (response) {
-        console.log("ESTA ES LA RESPUESTA ->", response)
-        $('#data_table').DataTable({
+        console.log("ESTA ES LA RESPUESTA ->", response['mascotas'])
+        datatable_mascota = $('#data_table').DataTable({
           pageLenght: 10,
-          "data": response["mascotas"],
+          data: response["mascotas"],
+          //name : {"data":"nombre"},
           "columns": [
             { "data": "nombre" },
             { "data": "fecha_nacimiento" },
             { "data": "raza" },
             { "data": "propietario" },
             { "data": "dni" },
-            { "data": "guardar"},
-  
+            { "defaultContent": "<button type='button' class='actualizar ingresar btn btn-info'>actualizar</button> <button type='button' class='ver ingresar btn btn-secondary'>ver</button>" },
+
           ]
         })
       }
 
     })
-  })
+
+    $('#data_table tbody').on('click', '.actualizar', function () {
+      let data = datatable_mascota.row($(this).parents()).data();
+      let nombre = data.nombre;
+      window.location.href = "/actualizar-mascota/" + nombre
+      //console.log('ID -> ', id)
+    });
+
+
+    $('#data_table tbody').on('click', '.ver', function () {
+      let data = datatable_mascota.row($(this).parents()).data();
+      let nombre = data.nombre; //Lua
+      window.location.href = "/ver-mascota/" + nombre
+      //console.log('ID -> ', id)
+    });
+
+  });
 
 </script>
 

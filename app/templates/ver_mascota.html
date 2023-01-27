@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+
+Ver informacion
+
+{% endblock titulo %}
+
+{% block tituloh1 %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 d-flex justify-content-center">
+      <h1 class="text-center">Perfil</h1>.
+    </div>
+  </div>
+</div>
+
+{% endblock tituloh1 %}
+
+{% block contenido %}
+
+    {% for perfil in mascota %}
+
+        <div class="form-row" style="text-align: center;">
+            <div class="col">
+               <label for="nombre"><strong>Nombre de mascota </strong>: </label>{{perfil.nombre}}
+            </div>
+
+            <div class="col">
+                <label for="raza"><strong>Raza de mascota : </strong></label>  {{perfil.raza}}
+             </div>
+
+             <div class="col">
+                <label for="nombre"><strong>Dueño de mascota : </strong></label>  {{perfil.propietario}}
+             </div>
+
+             <div class="col">
+                <label for="nombre"><strong>Dni de propietario :</strong> </label>  {{perfil.dni}}
+             </div>
+
+             <div class="col">
+                <label for="nombre"><strong>Fecha de nacimiento : </strong></label>  {{perfil.fecha_nacimiento}}
+             </div>
+
+        </div>
+
+    {% endfor %}
+    <div style="text-align: center;">
+        <a href="{{ url_for ('index') }}" type="button" class="btn btn-info">Regresar</a>
+
+    </div>
+    
+
+
+{% endblock contenido %}
